@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct MovieSelectionView: View {
-    @Query(sort: \.title, order: .forward) private var movies: [Movie]
+    @Query(sort: \Movie.title, order: .forward) private var movies: [Movie]
     @Binding var selectedMovies: Set<Movie>
 
     var body: some View {

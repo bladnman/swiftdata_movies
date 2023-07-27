@@ -9,7 +9,7 @@ import SwiftData
 import SwiftUI
 
 struct ActorSelectionView: View {
-    @Query(sort: \.name, order: .forward) private var actors: [Actor]
+    @Query(sort: \Actor.name, order: .forward) private var actors: [Actor]
     @Binding var selectedActors: Set<Actor>
 
     var body: some View {

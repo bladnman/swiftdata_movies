@@ -95,7 +95,7 @@ let previewContainer: ModelContainer = MainActor.assumeIsolated {
 
     // add in any default data
     for movie in sampleMovieList {
-        container.mainContext.insert(object: movie)
+        container.mainContext.insert(movie)
     }
 
     return container

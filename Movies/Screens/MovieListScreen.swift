@@ -21,8 +21,8 @@ enum Sheets: Identifiable {
 struct MovieListScreen: View {
     @Environment(\.modelContext) private var context
 
-    @Query(sort: \.title, order: .forward) private var movies: [Movie]
-    @Query(sort: \.name, order: .forward) private var actors: [Actor]
+    @Query(sort: \Movie.title, order: .forward) private var movies: [Movie]
+    @Query(sort: \Actor.name, order: .forward) private var actors: [Actor]
 
     @State private var actorName: String = ""
     @State private var activeSheet: Sheets?
