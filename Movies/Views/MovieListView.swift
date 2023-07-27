@@ -10,7 +10,29 @@ import SwiftUI
 
 struct MovieListView: View {
     @Environment(\.modelContext) private var context;
-    let movies: [Movie]
+    @Query private var movies: [Movie]
+
+    let filterOption: FilterOption
+
+    init(filterOption: FilterOption = .none) {
+        self.filterOption = filterOption
+        switch self.filterOption {
+        case .title(let movieTitle):
+            // dynamic predicate
+            _movies = Query(filter: #Predicate {
+//                $0.title.localizedLowercase.contains(movieTitle.localizedLowercase)
+                $0.title.contains(movieTitle)
+            })
+        case .reviewsCount(let numberOfReviews):
+            // dynamic predicate
+            _movies = Query(filter: #Predicate { $0.reviews.count >= numberOfReviews })
+        case .actorsCount(let numberOfActors):
+            // dynamic predicate
+            _movies = Query(filter: #Predicate { $0.actors.count >= numberOfActors })
+        case .none:
+            _movies = Query()
+        }
+    }
 
     private func deleteMovie(indexSet: IndexSet) {
         indexSet.forEach { index in
@@ -24,7 +46,13 @@ struct MovieListView: View {
             ForEach(movies) { movie in
                 NavigationLink(value: movie) {
                     HStack {
-                        Text(movie.title)
+                        VStack(alignment: .leading) {
+                            Text(movie.title)
+                            Text("\(movie.reviewsCount) reviews")
+                                .font(.caption)
+                            Text("\(movie.actorsCount) actors")
+                                .font(.caption)
+                        }
                         Spacer()
                         Text(movie.year.description)
                     }
@@ -39,6 +67,6 @@ struct MovieListView: View {
 
 #Preview {
     MyPreviewer {
-        MovieListView(movies: sampleMovieList)
+        MovieListView(filterOption: .none)
     }
 }

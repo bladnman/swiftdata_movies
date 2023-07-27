@@ -10,8 +10,15 @@ import SwiftData
 
 @Model
 final class Movie {
-    var title: String
-    var year: Int
+    var title: String = ""
+    var year: Int = 0
+
+    var reviewsCount: Int {
+        reviews.count
+    }
+    var actorsCount: Int {
+        actors.count
+    }
 
     @Relationship(.cascade, inverse: \Review.movie)
     var reviews: [Review] = []
