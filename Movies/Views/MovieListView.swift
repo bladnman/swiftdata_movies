@@ -21,7 +21,7 @@ struct MovieListView: View {
             // dynamic predicate
             _movies = Query(filter: #Predicate {
 //                $0.title.localizedLowercase.contains(movieTitle.localizedLowercase)
-                $0.title.contains(movieTitle)
+                $0.name.contains(movieTitle)
             })
         case .reviewsCount(let numberOfReviews):
             // dynamic predicate
@@ -47,7 +47,7 @@ struct MovieListView: View {
                 NavigationLink(value: movie) {
                     HStack {
                         VStack(alignment: .leading) {
-                            Text(movie.title)
+                            Text(movie.name)
                             Text("\(movie.reviewsCount) reviews")
                                 .font(.caption)
                             Text("\(movie.actorsCount) actors")

@@ -36,9 +36,9 @@ var sampleReviews: [Review] = MainActor.assumeIsolated {
 
 var sampleSpiderman: Movie = MainActor.assumeIsolated {
     var tempActor = Actor(name: "Toby Mcguire")
-    tempActor.movies = [Movie(title: "Spiderman", year: 2023)]
+    tempActor.movies = [Movie(name: "Spiderman", year: 2023)]
 
-    var movie = Movie(title: "Spiderman", year: 2023)
+    var movie = Movie(name: "Spiderman", year: 2023)
     movie.reviews = sampleReviews
     movie.actors = [
         tempActor,
@@ -47,7 +47,7 @@ var sampleSpiderman: Movie = MainActor.assumeIsolated {
 }
 
 var sampleBatman: Movie = MainActor.assumeIsolated {
-    var movie = Movie(title: "Batman", year: 1954)
+    var movie = Movie(name: "Batman", year: 1954)
     movie.actors = [
         Actor(name: "Jeb"),
         Actor(name: "Treat"),
@@ -72,8 +72,8 @@ var sampleMovieList: [Movie] = MainActor.assumeIsolated {
     var movies: [Movie] = [
         sampleSpiderman,
         sampleBatman,
-        Movie(title: "Superman", year: 2019),
-        Movie(title: "Up", year: 2007),
+        Movie(name: "Superman", year: 2019),
+        Movie(name: "Up", year: 2007),
     ]
     return movies
 }

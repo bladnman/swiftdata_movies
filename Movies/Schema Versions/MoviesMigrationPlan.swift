@@ -10,11 +10,11 @@ import SwiftData
 
 enum MoviesMigrationPlan: SchemaMigrationPlan {
     static var schemas: [any VersionedSchema.Type] {
-        [MoviesSchemaV1.self, MoviesSchemaV2.self]
+        [MoviesSchemaV1.self, MoviesSchemaV2.self, MoviesSchemaV3.self]
     }
     
     static var stages: [MigrationStage] {
-        [migrateV1toV2]
+        [migrateV1toV2, migrateV2toV3]
     }
     
     static let migrateV1toV2 = MigrationStage.custom(fromVersion: MoviesSchemaV1.self, toVersion: MoviesSchemaV2.self, willMigrate: { context in
@@ -26,7 +26,7 @@ enum MoviesMigrationPlan: SchemaMigrationPlan {
         
         // get movies that have a duplicate title
         for movie in movies {
-            if !uniqueSet.insert(movie.title).inserted {
+            if !uniqueSet.insert(movie.name).inserted {
                 duplicates.insert(movie)
             }
         }
@@ -34,10 +34,12 @@ enum MoviesMigrationPlan: SchemaMigrationPlan {
         // update duplicate titles
         for movie in duplicates {
             guard let movieToBeUpdated = movies.first(where: { $0.id == movie.id }) else { continue }
-            movieToBeUpdated.title = movieToBeUpdated.title + " \(UUID().uuidString)"
+            movieToBeUpdated.name = movieToBeUpdated.name + " \(UUID().uuidString)"
         }
             
         try? context.save()
         
     }, didMigrate: nil)
+    
+    static let migrateV2toV3 = MigrationStage.lightweight(fromVersion: MoviesSchemaV2.self, toVersion: MoviesSchemaV3.self)
 }

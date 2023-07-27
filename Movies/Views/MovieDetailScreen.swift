@@ -21,7 +21,7 @@ struct MovieDetailScreen: View {
             TextField("Year", value: $year, format: .number)
             Button("Update") {
                 guard let year = year else { return }
-                movie.title = title
+                movie.name = title
                 movie.year = year
             }
             .buttonStyle(.borderless)
@@ -56,7 +56,7 @@ struct MovieDetailScreen: View {
             }
         }
         .onAppear {
-            title = movie.title
+            title = movie.name
             year = movie.year
         }
         .sheet(isPresented: $showReviewScreen, content: {
